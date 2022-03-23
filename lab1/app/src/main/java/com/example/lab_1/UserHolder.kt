@@ -1,4 +1,4 @@
-package com.example.firstlesson
+package com.example.lab_1
 
 import androidx.annotation.VisibleForTesting
 
@@ -29,17 +29,25 @@ object UserHolder {
         }
     }
 
+    fun registerUserByPhone(fullName: String, rawPhone: String): User = User.makeUser(fullName, phone = rawPhone)
+        .also {user ->
+            if(map.containsKey(user.phone)) throw IllegalArgumentException("Current number already exists")
+            if(cleanPhone(rawPhone).matches(phoneFormat)) map[user.login] = user
+            else throw IllegalArgumentException("Phone is incorrect")
+        }
 
-//    fun registerUserByPhone(fullName: String, rawPhone: String): User {
-//        TODO()
-//    }
-
-//    fun requestAccessCode(login: String) {
-//        TODO()
-//    }
+    fun requestAccessCode(login: String) {
+        val phone: String = cleanPhone(login)
+        map[phone]?.let {
+            val code: String = it.generateAccessCode()
+            it.passwordHash = it.encrypt(code)
+            it.accessCode = code
+            it.sendAccessCodeToUser(phone, code)
+        }
+    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun clearHolder() {
+    fun clearHolder(){
         map.clear()
     }
 

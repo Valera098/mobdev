@@ -1,7 +1,5 @@
-package com.example.firstlesson
-
+package com.example.lab_1
 import org.junit.After
-import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -16,7 +14,6 @@ class ExampleUnitTest {
     /**
     Добавьте метод в UserHolder для очистки значений UserHolder после выполнения каждого теста,
     это необходимо чтобы тесты можно было запускать одновременно
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearHolder(){
     map.clear()
